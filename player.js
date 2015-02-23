@@ -1,7 +1,7 @@
 // player.js
 
-define(['vector', 'logger', 'canvas'],
-  function(Vector, Logger, Canvas) {
+define(['vector', 'logger', 'canvas', 'url'],
+  function(Vector, Logger, Canvas, URL) {
     var Player = {};
 
     Player.init = function(params) {
@@ -16,13 +16,11 @@ define(['vector', 'logger', 'canvas'],
     };
 
     Player.gravity = function(planets) {
-      Logger.log(3, "starting gravity function");
       this.acceleration = new Vector(0,0);
       for (var p in planets) {
         var planet = planets[p];
         var distance = this.position.distance(planet.position);
         var between = this.position.clone().subtract(planet.position);
-        console.log("between.length()", between.length());
         var uBetween = between.divide(new Vector(between.length(), between.length()));
         var magnitude = newtonsMagnitude(
           this.mass,
@@ -31,10 +29,8 @@ define(['vector', 'logger', 'canvas'],
           100
         );
         var newtonsForce = uBetween.multiply(new Vector(-magnitude, -magnitude));
-        Logger.log(3, {"adding to acceleration": newtonsForce.x, "mag": magnitude});
         this.acceleration.add(newtonsForce);
       }
-      console.log("finished gravity function", this.acceleration.x, this.acceleration.y, this.position.x, this.position.y);
     };
 
     Player.jump = function() {
@@ -44,26 +40,28 @@ define(['vector', 'logger', 'canvas'],
         var jumpAcceleration = Player.position.clone().subtract(Player.planetOn.position);
         Player.velocity = jumpAcceleration.clone().divide( new Vector( 8, 8 ));
         Player.acceleration = jumpAcceleration;
-        // Player.jumping = false;
+        if (URL.params.autojump === 'false') {
+          Player.jumping = false;
+        }
       }
     };
 
     Player.draw = function() {
-      Logger.log(3, "called Player.draw()");
       Canvas.ctx2d.rect(
         this.position.x,
         this.position.y,
-        10,
-        10
+        URL.params.playerSize,
+        URL.params.playerSize
       );
       Canvas.ctx2d.fillStyle = "white";
+      Canvas.ctx2d.lineWidth = URL.params.playerLineWidth;
+      Canvas.ctx2d.strokeStyle = URL.params.playerColor;
       Canvas.ctx2d.fill();
       Canvas.ctx2d.stroke();
     };
 
     newtonsMagnitude = function(m1, m2, r, G) {
       var mag = G * (m1 * m2) / Math.pow(r, 2);
-      Logger.log(2, {"newton's magnitude": mag});
       return mag;
     };
 

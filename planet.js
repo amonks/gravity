@@ -15,8 +15,8 @@ define( ['vector', 'logger', 'canvas'],
       Canvas.ctx2d.ellipse(
         this.position.x,
         this.position.y,
-        Math.sqrt(this.mass),
-        Math.sqrt(this.mass),
+        this.mass,
+        this.mass,
         0,
         0,
         2 * Math.PI

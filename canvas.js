@@ -1,8 +1,8 @@
 // canvas.js
 //
 
-define(['logger'],
-  function(Logger) {
+define(['logger', 'vector'],
+  function(Logger, Vector) {
     Canvas = {};
 
     // initializer
@@ -14,6 +14,11 @@ define(['logger'],
       this.canvas.setAttribute("height", window.innerHeight);
       Logger.log(2, this);
     };
+
+    Canvas.randomPoint = function() {
+      return new Vector(Math.random() * window.innerWidth, Math.random() * window.innerHeight);
+    };
+
     return Canvas;
   }
 );

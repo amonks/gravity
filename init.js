@@ -1,15 +1,19 @@
 requirejs.config({
   // baseUrl: 'js',
   shim: {
-    'logger': {
-      exports: 'Logger'
+    "vector": {
+      exports: "Victor"
     }
   }
 });
 
-requirejs(['app', 'logger'],
+requirejs(['gravity', 'logger'],
   function(Gravity, Logger) {
-    Logger.log(1, "calling Gravity.init()");
+    // start logger
+    Logger.init({verbosity: 3});
+
+    // start game
+    Logger.log(3, "calling Gravity.init()");
     Gravity.init();
   }
 );

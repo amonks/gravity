@@ -17,8 +17,7 @@ define( ['logger', 'canvas', 'planet', 'vector', 'player', 'url'],
       Player.draw();
       Gravity.planets = [];
 
-      var numPlanets = 4;
-      for (var i = 0; i < numPlanets; i++) {
+      for (var i = 0; i < URL.params.planetCount; i++) {
         var planet = Object.create(Planet);
         planet.position = Canvas.randomPoint();
         planet.mass = Math.random() * 50 + 80;

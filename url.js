@@ -11,7 +11,9 @@ define(['logger'], function(Logger) {
     "playerColor": "red",
     "planetColor": "black",
     "playerSize": 1,
-    "lineWidth": 5
+    "planetLineWidth": 5,
+    "playerLineWidth": 5,
+    "planetCount": 4
   };
 
   URL.getQueryParams = function() {

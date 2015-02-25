@@ -33,7 +33,8 @@ define(['vector', 'logger', 'canvas', 'url', 'gravity'],
       var onPlanet = false;
       for (var p in planets) {
         var touchingPlanet = planets[p];
-        if (Player.position.clone().subtract(touchingPlanet.position).magnitude() <= touchingPlanet.mass) {
+        var distanceFromTouchingPlanet = Player.position.clone().subtract(touchingPlanet.position).magnitude();
+        if (distanceFromTouchingPlanet <= touchingPlanet.mass + URL.params.playerWidth) {
           Logger.log(3, "on a planet!");
           onPlanet = true;
           Player.planetOn = touchingPlanet;
@@ -49,15 +50,15 @@ define(['vector', 'logger', 'canvas', 'url', 'gravity'],
       for (var p in planets) {
         var planet = planets[p];
         var distance = this.position.distance(planet.position);
-        var between = this.position.clone().subtract(planet.position);
-        var uBetween = between.divide(new Vector(between.length(), between.length()));
-        var magnitude = newtonsMagnitude(
+        var betweenVector = this.position.clone().subtract(planet.position);
+        betweenVector.normalize();
+        var gravityMagnitude = newtonsMagnitude(
           this.mass,
           planet.mass,
           distance + 1,
-          100
+          URL.params.gravitationalConstant
         );
-        var newtonsForce = uBetween.multiply(new Vector(-magnitude, -magnitude));
+        var newtonsForce = betweenVector.multiply(new Vector(-gravityMagnitude, -gravityMagnitude));
         this.acceleration.add(newtonsForce);
       }
     };
@@ -67,7 +68,7 @@ define(['vector', 'logger', 'canvas', 'url', 'gravity'],
         Logger.log(2, "Jump!");
         // accelerate away from Player.planetOn.position
         var jumpAcceleration = Player.position.clone().subtract(Player.planetOn.position);
-        Player.velocity = jumpAcceleration.clone().divide( new Vector( 8, 8 ));
+        Player.velocity = jumpAcceleration.clone().norm().multiply(new Vector(URL.params.jumpHeight));
         Player.acceleration = jumpAcceleration;
         if (URL.params.autojump === 'false') {
           Player.jumping = false;

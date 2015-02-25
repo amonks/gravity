@@ -1,9 +1,7 @@
-// url.js
+## url params and defaults
 
-define(['logger'], function(Logger) {
-  URL = {};
+usage, eg: [gravity?playerHeight=40&playerColor=black](http://ss.cx/~ajm/gravity?playerHeight=40&playerColor=black)
 
-  defaults = {
     "msPerFrame": 1,        // miliseconds for each frame
     "gravitationalConstant": 100, // used in newton's equation
     "jumpHeight": 15,
@@ -19,29 +17,3 @@ define(['logger'], function(Logger) {
     "planetLineWidth": 1,   // planet outline width
     "playerLineWidth": 1,   // player rectangle ilne width
     "planetCount": 4        // number of planets
-  };
-
-  // function to create a params object from the current url
-  URL.getQueryParams = function() {
-    var query = location.search.substr(1) + location.hash;
-    var result = {};
-    query.split("&").forEach(function(part) {
-      var item = part.split("=");
-      result[item[0]] = decodeURIComponent(item[1]);
-    });
-    Logger.log(2, {"url params": result});
-    return result;
-  };
-
-  URL.init = function() {
-    var queryParams = URL.getQueryParams();
-    var params = {};
-    for (var index in defaults) {
-      params[index] = queryParams[index] || defaults[index];
-    }
-    Logger.log(1, {"run params": params});
-    URL.params = params;
-  };
-
-  return URL;
-});

@@ -20,7 +20,7 @@ define( ['logger', 'canvas', 'planet', 'vector', 'player', 'url'],
       for (var i = 0; i < URL.params.planetCount; i++) {
         var planet = Object.create(Planet);
         planet.position = Canvas.randomPoint();
-        planet.mass = Math.random() * 50 + 80;
+        planet.mass = Math.random() * URL.params.widthRange + URL.params.widthMin;
         Gravity.planets.push(planet);
       }
 
@@ -31,30 +31,9 @@ define( ['logger', 'canvas', 'planet', 'vector', 'player', 'url'],
 
     Gravity.frame = function() {
 
-      Player.gravity(Gravity.planets);
+      Player.update(Gravity.planets);
 
-      var onPlanet = false;
       for (var p in Gravity.planets) {
-        var touchingPlanet = Gravity.planets[p];
-        if (Player.position.clone().subtract(touchingPlanet.position).magnitude() <= touchingPlanet.mass) {
-          Logger.log(3, "on a planet!");
-          onPlanet = true;
-          Player.planetOn = touchingPlanet;
-          Player.velocity = new Vector(0, 0);
-          Player.acceleration = new Vector(0, 0);
-        }
-      }
-      Player.onPlanet = onPlanet;
-
-      Player.velocity.add(Player.acceleration);
-
-      if (Player.jumping === true || URL.params.autojump === "true") {
-        Player.jump();
-      }
-
-      Player.position.add(Player.velocity);
-
-      for (p in Gravity.planets) {
         var planet = Gravity.planets[p];
         if (URL.params.showPlanets === "true") {
           planet.draw();
@@ -62,7 +41,7 @@ define( ['logger', 'canvas', 'planet', 'vector', 'player', 'url'],
       }
       Player.draw();
 
-      setTimeout(Gravity.frame, 1);
+      setTimeout(Gravity.frame, URL.params.msPerFrame);
     };
 
     return Gravity;

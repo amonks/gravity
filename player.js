@@ -1,7 +1,7 @@
 // player.js
 
-define(['vector', 'logger', 'canvas', 'url'],
-  function(Vector, Logger, Canvas, URL) {
+define(['vector', 'logger', 'canvas', 'url', 'gravity'],
+  function(Vector, Logger, Canvas, URL, Gravity) {
     var Player = {};
 
     Player.init = function(params) {
@@ -15,7 +15,36 @@ define(['vector', 'logger', 'canvas', 'url'],
       };
     };
 
-    Player.gravity = function(planets) {
+    Player.update = function(planets) {
+      Player.applyGravityFromPlanets(planets);
+
+      Player.checkCollision(planets);
+
+      Player.velocity.add(Player.acceleration);
+
+      if (Player.jumping === true || URL.params.autojump === "true") {
+        Player.jump();
+      }
+
+      Player.position.add(Player.velocity);
+    };
+
+    Player.checkCollision = function(planets) {
+      var onPlanet = false;
+      for (var p in planets) {
+        var touchingPlanet = planets[p];
+        if (Player.position.clone().subtract(touchingPlanet.position).magnitude() <= touchingPlanet.mass) {
+          Logger.log(3, "on a planet!");
+          onPlanet = true;
+          Player.planetOn = touchingPlanet;
+          Player.velocity = new Vector(0, 0);
+          Player.acceleration = new Vector(0, 0);
+        }
+      }
+      Player.onPlanet = onPlanet;
+    };
+
+    Player.applyGravityFromPlanets = function(planets) {
       this.acceleration = new Vector(0,0);
       for (var p in planets) {
         var planet = planets[p];
@@ -47,15 +76,15 @@ define(['vector', 'logger', 'canvas', 'url'],
     };
 
     Player.draw = function() {
+      Canvas.ctx2d.fillStyle = URL.params.playerFill;
+      Canvas.ctx2d.lineWidth = URL.params.playerLineWidth;
+      Canvas.ctx2d.strokeStyle = URL.params.playerStroke;
       Canvas.ctx2d.rect(
         this.position.x,
         this.position.y,
-        URL.params.playerSize,
-        URL.params.playerSize
+        URL.params.playerWidth,
+        URL.params.playerHeight
       );
-      Canvas.ctx2d.fillStyle = "white";
-      Canvas.ctx2d.lineWidth = URL.params.playerLineWidth;
-      Canvas.ctx2d.strokeStyle = URL.params.playerColor;
       Canvas.ctx2d.fill();
       Canvas.ctx2d.stroke();
     };

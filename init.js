@@ -3,6 +3,9 @@ requirejs.config({
   shim: {
     "vector": {
       exports: "Victor"
+    },
+    "three": {
+      exports: "THREE"
     }
   }
 });

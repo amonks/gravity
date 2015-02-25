@@ -1,7 +1,7 @@
 // gravity.js
 
-define( ['logger', 'canvas', 'planet', 'player', 'url'],
-  function(Logger, Canvas, Planet, Player, URL) {
+define( ['logger', 'canvas', 'planet', 'player', 'url', 'three', 'world'],
+  function(Logger, Canvas, Planet, Player, URL, THREE, World) {
     var Gravity = {};
 
     // initializer
@@ -10,6 +10,7 @@ define( ['logger', 'canvas', 'planet', 'player', 'url'],
 
       URL.init();
       Canvas.init();
+      World.init();
       Player.init({
         position: Canvas.randomPoint(),
         mass: 1,

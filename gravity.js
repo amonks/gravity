@@ -1,7 +1,7 @@
 // gravity.js
 
-define( ['logger', 'canvas', 'planet', 'vector', 'player', 'url'],
-  function(Logger, Canvas, Planet, Vector, Player, URL) {
+define( ['logger', 'canvas', 'planet', 'player', 'url'],
+  function(Logger, Canvas, Planet, Player, URL) {
     var Gravity = {};
 
     // initializer

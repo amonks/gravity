@@ -2,10 +2,10 @@
 
 usage, eg: 
 
-* [gravity?playerHeight=40&playerStroke=black](http://ss.cx/~ajm/gravity?playerHeight=40&playerStroke=black)
-* [gravity?&playerStroke=black&showPlanets=true&planetCount=1](http://ss.cx/~ajm/gravity?&playerStroke=black&showPlanets=true&planetCount=1)
-* [gravity/?&playerStroke=black&showPlanets=true&planetCount=5&planetLineWidth=50&jumpHeight=20&playerWidth=50&playerHeight=50&playerFill=red](http://ss.cx/~ajm/gravity?&playerStroke=black&showPlanets=true&planetCount=5&planetLineWidth=50&jumpHeight=20&playerWidth=50&playerHeight=50&playerFill=red)
-* [gravity?&playerStroke=black&showPlanets=true&planetCount=5&planetLineWidth=1&jumpHeight=5&playerFill=white](http://ss.cx/~ajm/gravity/?&playerStroke=black&showPlanets=true&planetCount=5&planetLineWidth=1&jumpHeight=5&playerFill=white)
+* [`gravity?playerHeight=40&playerStroke=black`](http://ss.cx/~ajm/gravity?playerHeight=40&playerStroke=black)
+* [`gravity?&playerStroke=black&showPlanets=true&planetCount=1`](http://ss.cx/~ajm/gravity?&playerStroke=black&showPlanets=true&planetCount=1)
+* [`gravity/?&playerStroke=black&showPlanets=true&planetCount=5&planetLineWidth=50&jumpHeight=20&playerWidth=50&playerHeight=50&playerFill=red`](http://ss.cx/~ajm/gravity?&playerStroke=black&showPlanets=true&planetCount=5&planetLineWidth=50&jumpHeight=20&playerWidth=50&playerHeight=50&playerFill=red)
+* [`gravity?&playerStroke=black&showPlanets=true&planetCount=5&planetLineWidth=1&jumpHeight=5&playerFill=white`](http://ss.cx/~ajm/gravity/?&playerStroke=black&showPlanets=true&planetCount=5&planetLineWidth=1&jumpHeight=5&playerFill=white)
 
 ```js
 "msPerFrame": 1,        // miliseconds for each frame
